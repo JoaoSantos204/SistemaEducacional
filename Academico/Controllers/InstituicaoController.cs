@@ -26,6 +26,7 @@ namespace Academico.Controllers
         }
 
         // GET: Instituicao/Details/5
+        [Route("Instituicao/Detalhes")]
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -44,6 +45,7 @@ namespace Academico.Controllers
         }
 
         // GET: Instituicao/Create
+        [Route("Instituicao/Criar")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +56,7 @@ namespace Academico.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Criar")]
         public async Task<IActionResult> Create([Bind("InstituicaoID,Nome,Telefone")] Instituicao instituicao)
         {
             if (ModelState.IsValid)
@@ -66,6 +69,7 @@ namespace Academico.Controllers
         }
 
         // GET: Instituicao/Edit/5
+        [HttpGet("Instituicao/Editar/{id}")]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -84,7 +88,7 @@ namespace Academico.Controllers
         // POST: Instituicao/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("Instituicao/Editar/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long id, [Bind("InstituicaoID,Nome,Telefone")] Instituicao instituicao)
         {
@@ -117,6 +121,7 @@ namespace Academico.Controllers
         }
 
         // GET: Instituicao/Delete/5
+        [HttpGet("Instituicao/Deletar/{id}")]
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -135,7 +140,7 @@ namespace Academico.Controllers
         }
 
         // POST: Instituicao/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("Instituicao/Deletar/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {

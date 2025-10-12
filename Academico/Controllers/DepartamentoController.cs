@@ -27,6 +27,7 @@ namespace Academico.Controllers
         }
 
         // GET: Departamento/Details/5
+        [Route("Departamento/Detalhes")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,7 +37,7 @@ namespace Academico.Controllers
 
             var departamento = await _context.Departamentos
                 .Include(d => d.Instituicao)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.DepartamentoID == id);
             if (departamento == null)
             {
                 return NotFound();
@@ -46,6 +47,7 @@ namespace Academico.Controllers
         }
 
         // GET: Departamento/Create
+        [Route("Departamentos/Criar")]
         public IActionResult Create()
         {
             ViewData["InstituicaoID"] = new SelectList(_context.Instituicoes, "InstituicaoID", "InstituicaoID");
@@ -57,6 +59,7 @@ namespace Academico.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Departamentos/Criar")]
         public async Task<IActionResult> Create([Bind("Id,Nome,InstituicaoID")] Departamento departamento)
         {
             if (ModelState.IsValid)
@@ -70,6 +73,7 @@ namespace Academico.Controllers
         }
 
         // GET: Departamento/Edit/5
+        [HttpGet("Departamentos/Editar/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -89,11 +93,11 @@ namespace Academico.Controllers
         // POST: Departamento/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("Departamentos/Editar/{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,InstituicaoID")] Departamento departamento)
+        public async Task<IActionResult> Edit(int id, [Bind("DepartamentoID,Nome,InstituicaoID")] Departamento departamento)
         {
-            if (id != departamento.Id)
+            if (id != departamento.DepartamentoID)
             {
                 return NotFound();
             }
@@ -107,7 +111,7 @@ namespace Academico.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DepartamentoExists(departamento.Id))
+                    if (!DepartamentoExists(departamento.DepartamentoID))
                     {
                         return NotFound();
                     }
@@ -123,6 +127,7 @@ namespace Academico.Controllers
         }
 
         // GET: Departamento/Delete/5
+        [HttpGet("Departamentos/Deletar/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,7 +137,7 @@ namespace Academico.Controllers
 
             var departamento = await _context.Departamentos
                 .Include(d => d.Instituicao)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.DepartamentoID == id);
             if (departamento == null)
             {
                 return NotFound();
@@ -142,7 +147,7 @@ namespace Academico.Controllers
         }
 
         // POST: Departamento/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("Departamentos/Deletar/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -158,7 +163,7 @@ namespace Academico.Controllers
 
         private bool DepartamentoExists(int id)
         {
-            return _context.Departamentos.Any(e => e.Id == id);
+            return _context.Departamentos.Any(e => e.DepartamentoID == id);
         }
     }
 }

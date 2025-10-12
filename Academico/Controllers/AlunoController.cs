@@ -1,5 +1,6 @@
 ﻿using Academico.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Academico.Controllers
 {
@@ -10,12 +11,15 @@ namespace Academico.Controllers
         {
             return View(_alunos);
         }
+
+        [Route("Criar")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Route("Criar")]
         public IActionResult Create(Aluno aluno)
         {
             try
@@ -34,7 +38,7 @@ namespace Academico.Controllers
             }
             
         }
-
+        [Route("Editar")]
         public IActionResult Edit(int id)
         {
             var aluno = _alunos.FirstOrDefault(a => a.AlunoID == id);
@@ -47,6 +51,8 @@ namespace Academico.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+        [Route("Editar")]
         public IActionResult Edit(Aluno aluno)
         {
             if (ModelState.IsValid)
@@ -57,6 +63,8 @@ namespace Academico.Controllers
             }
             return View(aluno);
         }
+
+        [Route("Detalhes")]
         public IActionResult Details(int id)
         {
             var aluno = _alunos.FirstOrDefault(a => a.AlunoID == id);
@@ -67,7 +75,8 @@ namespace Academico.Controllers
             return View(aluno);
         }
 
-        public IActionResult Delete(int id)
+        [HttpGet("Deletar/{id}")]
+        public IActionResult Delete(int? id)
         {
             var aluno = _alunos.FirstOrDefault(a => a.AlunoID == id);
             if (aluno == null)
@@ -77,13 +86,10 @@ namespace Academico.Controllers
             return View(aluno);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("Deletar/{id}")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int? id)
         {
-            
-            try
-            {
                 var aluno = _alunos.FirstOrDefault(a => a.AlunoID == id);
                 if(aluno == null)
                 {
@@ -91,12 +97,7 @@ namespace Academico.Controllers
                 }
                 _alunos.Remove(aluno);
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                
-            }
-            return RedirectToAction("Index");
+
         }
     }
 }
