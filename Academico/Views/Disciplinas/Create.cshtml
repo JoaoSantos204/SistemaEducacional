@@ -1,30 +1,33 @@
-﻿@model Academico.Models.Instituicao
+﻿@model Academico.Models.Disciplina
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Editar</h1>
+<h1>Criar</h1>
 
-<h4>Instituição</h4>
+<h4>Disciplina</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" asp-route-id="@Model.InstituicaoID" method="post">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="InstituicaoID" />
             <div class="form-group">
                 <label asp-for="Nome" class="control-label"></label>
                 <input asp-for="Nome" class="form-control" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Telefone" class="control-label"></label>
-                <input asp-for="Telefone" class="form-control" />
-                <span asp-validation-for="Telefone" class="text-danger"></span>
+                <label asp-for="CargaHoraria" class="control-label"></label>
+                <input asp-for="CargaHoraria" class="form-control" />
+                <span asp-validation-for="CargaHoraria" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <label asp-for="CursoID" class="control-label"></label>
+                <select asp-for="CursoID" class ="form-control" asp-items="ViewBag.CursoID"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-primary" />
             </div>
         </form>
     </div>

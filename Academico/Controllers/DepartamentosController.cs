@@ -10,24 +10,25 @@ using Academico.Models;
 
 namespace Academico.Controllers
 {
-    public class DepartamentoController : Controller
+    public class DepartamentosController : Controller
     {
         private readonly EducacionalContext _context;
 
-        public DepartamentoController(EducacionalContext context)
+        public DepartamentosController(EducacionalContext context)
         {
             _context = context;
         }
 
-        // GET: Departamento
+        
+        // GET: Departamentos
         public async Task<IActionResult> Index()
         {
             var educacionalContext = _context.Departamentos.Include(d => d.Instituicao);
             return View(await educacionalContext.ToListAsync());
         }
 
-        // GET: Departamento/Details/5
-        [Route("Departamento/Detalhes")]
+        // GET: Departamentos/Details/5
+        [Route("Departamentos/Detalhes")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,21 +47,20 @@ namespace Academico.Controllers
             return View(departamento);
         }
 
-        // GET: Departamento/Create
+        // GET: Departamentos/Create
         [Route("Departamentos/Criar")]
         public IActionResult Create()
         {
-            ViewData["InstituicaoID"] = new SelectList(_context.Instituicoes, "InstituicaoID", "InstituicaoID");
+            ViewData["InstituicaoID"] = new SelectList(_context.Instituicoes, "InstituicaoID", "Nome");
             return View();
         }
 
-        // POST: Departamento/Create
+        // POST: Departamentos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("Departamentos/Criar")]
         [ValidateAntiForgeryToken]
-        [Route("Departamentos/Criar")]
-        public async Task<IActionResult> Create([Bind("Id,Nome,InstituicaoID")] Departamento departamento)
+        public async Task<IActionResult> Create([Bind("DepartamentoID,Nome,InstituicaoID")] Departamento departamento)
         {
             if (ModelState.IsValid)
             {
@@ -68,11 +68,11 @@ namespace Academico.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InstituicaoID"] = new SelectList(_context.Instituicoes, "InstituicaoID", "InstituicaoID", departamento.InstituicaoID);
+            ViewData["InstituicaoID"] = new SelectList(_context.Instituicoes, "InstituicaoID", "Nome", departamento.InstituicaoID);
             return View(departamento);
         }
 
-        // GET: Departamento/Edit/5
+        // GET: Departamentos/Edit/5
         [HttpGet("Departamentos/Editar/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -86,11 +86,11 @@ namespace Academico.Controllers
             {
                 return NotFound();
             }
-            ViewData["InstituicaoID"] = new SelectList(_context.Instituicoes, "InstituicaoID", "InstituicaoID", departamento.InstituicaoID);
+            ViewData["InstituicaoID"] = new SelectList(_context.Instituicoes, "InstituicaoID", "Nome", departamento.InstituicaoID);
             return View(departamento);
         }
 
-        // POST: Departamento/Edit/5
+        // POST: Departamentos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost("Departamentos/Editar/{id}")]
@@ -122,11 +122,11 @@ namespace Academico.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InstituicaoID"] = new SelectList(_context.Instituicoes, "InstituicaoID", "InstituicaoID", departamento.InstituicaoID);
+            ViewData["InstituicaoID"] = new SelectList(_context.Instituicoes, "InstituicaoID", "Nome", departamento.InstituicaoID);
             return View(departamento);
         }
 
-        // GET: Departamento/Delete/5
+        // GET: Departamentos/Delete/5
         [HttpGet("Departamentos/Deletar/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -146,7 +146,7 @@ namespace Academico.Controllers
             return View(departamento);
         }
 
-        // POST: Departamento/Delete/5
+        // POST: Departamentos/Delete/5
         [HttpPost("Departamentos/Deletar/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
